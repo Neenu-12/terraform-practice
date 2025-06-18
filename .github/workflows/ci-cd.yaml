@@ -1,1 +1,30 @@
+name: first workflow
 
+on:
+  push:
+    paths:
+      - '.github/workflows/**.yaml'
+
+jobs:
+  DeployTFtemmplate:
+    name: first job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1
+        uses: hashicorp/setup-terraform@v3
+      - name: Step2
+        uses: actions/checkout@v4
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4.1.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+      - name: change directory
+        run: cd first/
+      - name: init
+        run: terraform init
+      - name: plan
+        run: terraform plan
+      - name: apply
+        run: terraform apply
