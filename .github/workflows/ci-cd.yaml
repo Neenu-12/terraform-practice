@@ -9,6 +9,9 @@ jobs:
   DeployTFtemmplate:
     name: first job
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./first
     steps:
       - name: Step 1
         uses: hashicorp/setup-terraform@v3
@@ -20,15 +23,9 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
-      - name: change directory
-        run: |
-          ls
-          cd first/
-          ls
       - name: init
         run: terraform init
       - name: plan
         run: terraform plan
       - name: apply
         run: terraform apply
-#
